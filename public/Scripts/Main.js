@@ -3,11 +3,11 @@ var app = angular.module('myApp', []);
 /****************************************
  *			 MAIN CONTROLLER 		   	*
  ****************************************/
-app.controller('mainCtrl', function($scope,$compile, NameNoteService, ChordService, GameControlService){
+app.controller('mainCtrl', function($window, $scope,$compile, NameNoteService, ChordService, GameControlService){
 	
 	var _category = "Note";
 	$scope.nextQuestionSwitch = false;
-	
+
 	//Check Answer respond and render respond to UI.
 	$scope.checkRespond = function(){
 		var respond = GameControlService.getQuestionRespond();
@@ -44,8 +44,10 @@ app.controller('mainCtrl', function($scope,$compile, NameNoteService, ChordServi
 		var answerBox = angular.element(document.querySelector('div[id=answerBox]'));
 		answerBox.children().remove();
 		for(i = 0; i < answerSet.length; i++){
-			answerBox.append($compile(answerSet[i])($scope));
+			var answer = answerSet[i];
+			answerBox.append(answer);
 		}
+		$compile(answerBox)($scope);
 	};
 
 	//Routine run for "Chord" game mode.
@@ -67,9 +69,12 @@ app.controller('mainCtrl', function($scope,$compile, NameNoteService, ChordServi
 		var answerSet = ChordService.getAnswerSet();
 		var answerBox = angular.element(document.querySelector('div[id=answerBox]'));
 		answerBox.children().remove();
+		
 		for(i = 0; i < answerSet.length; i++){
-			answerBox.append($compile(answerSet[i])($scope));
+			var answer = answerSet[i];
+			answerBox.append(answer);
 		}
+		$compile(answerBox)($scope);
 	};
 
 	//Construct new question.
@@ -99,6 +104,14 @@ app.controller('mainCtrl', function($scope,$compile, NameNoteService, ChordServi
 		_category = newCat;
 		$scope.next();
 	};
+
+	//Recompile size when orientation change.
+	angular.element($window).bind('orientationchange', function(){
+		var answerBox = angular.element(document.querySelector('div[id=answerBox]'));
+		var questionBox = angular.element(document.querySelector('div[id=questionBox]'));
+		$compile(answerBox)($scope);
+		$compile(questionBox)($scope);
+	});
 
 	$scope.nextQuestion();
 });
@@ -191,7 +204,7 @@ app.directive('key', function(){
  ****************************************/
 
  //This class to make sure question has a fixed size ratio.
-app.directive('questionBoxSize',function(){
+app.directive('questionBoxSize',function($compile){
 	return {
 		restrict: 'C',
 		link : function(scope, element, attrs){
@@ -202,6 +215,16 @@ app.directive('questionBoxSize',function(){
 	}
 });
 
+app.directive('squareBox', function($window){
+    return{
+        restrict: 'C',
+        link: function(scope, element){
+            var style = $window.getComputedStyle(element[0], null);
+            var width = style.getPropertyValue('width');
+            element.css('height', width);
+        }
+    }
+});
 
 
 

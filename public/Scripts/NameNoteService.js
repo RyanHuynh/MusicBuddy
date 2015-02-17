@@ -59,13 +59,13 @@ app.service('NameNoteService', function(NoteModel, GameControlService){
 		for(i = 1; i <= 3; i++){
 			var currentNoteIndex = (_correctAnswerIndex + 2 * i) % _noteNameList.length;
 			var currentNoteName = _noteNameList[currentNoteIndex];
-			var currentNote = "<answer value=" + currentNoteName + " type='Note'></answer>";
+			var currentNote = "<answer class='squareBox' value=" + currentNoteName + " type='Note'></answer>";
 			resultSet.push(currentNote);
 		}
 
 		//Add correct answer
 		var correctAnswer = _noteNameList[_correctAnswerIndex];
-		var cAnswer = "<answer value=" + correctAnswer + " type='Note'></answer>";
+		var cAnswer = "<answer  class='squareBox'  value=" + correctAnswer + " type='Note'></answer>";
 		var randomInsertIndex = Math.floor(Math.random() * 4);
 		resultSet.splice(randomInsertIndex, 0, cAnswer);
 

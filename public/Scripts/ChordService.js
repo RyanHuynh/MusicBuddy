@@ -106,13 +106,13 @@ app.service('ChordService', function(NoteModel, GameControlService){
 		for(i = 1; i <= 3; i++){
 			var currentChordIndex = (_correctAnswerIndex + 2 * i) % _chordNameList.length;
 			var currentChordName = _chordNameList[currentChordIndex];
-			var currentChord = "<answer value=" + currentChordName + " type='Chord'></answer>";
+			var currentChord = "<answer class='squareBox' value=" + currentChordName + " type='Chord'></answer>";
 			resultSet.push(currentChord);
 		}
 
 		//Get the correct answer
 		var correctAnswerName = _chordNameList[_correctAnswerIndex];
-		var correctAnswer = "<answer value=" + correctAnswerName + " type='Chord'></answer>";
+		var correctAnswer = "<answer  class='squareBox'  value=" + correctAnswerName + " type='Chord'></answer>";
 		var correctAnswerRandomIndex = Math.floor(Math.random() * 4);
 		resultSet.splice(correctAnswerRandomIndex, 0, correctAnswer);
 
