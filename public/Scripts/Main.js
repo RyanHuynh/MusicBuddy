@@ -3,7 +3,7 @@ var app = angular.module('myApp', []);
 /****************************************
  *			 MAIN CONTROLLER 		   	*
  ****************************************/
-app.controller('mainCtrl', function($window, $scope,$compile, NameNoteService, ChordService, GameControlService){
+app.controller('mainCtrl', function($window, $scope,$compile, NameNoteService, ChordService, ScaleService, GameControlService){
 	
 	var _category = "Note";
 	$scope.nextQuestionSwitch = false;
@@ -77,6 +77,33 @@ app.controller('mainCtrl', function($window, $scope,$compile, NameNoteService, C
 		$compile(answerBox)($scope);
 	};
 
+	//Routine run for "Chord" game mode.
+	var ScaleRun = function(){
+		var questionBox = angular.element(document.querySelector('div[id=questionBox]'));
+		
+		//Get clef used.
+		var clefUsed = GameControlService.getClefUsed();
+		questionBox.css('background-image', 'url(img/Clef/' + clefUsed + '.jpg)' );
+
+		//Get question
+		var notes = ScaleService.getQuestion();
+		for(i =0; i < notes.length; i++){
+			var note = notes[i];
+			questionBox.append($compile(note)($scope));
+		}
+
+		//Get answers for the question.
+		var answerSet = ScaleService.getAnswerSet();
+		var answerBox = angular.element(document.querySelector('div[id=answerBox]'));
+		answerBox.children().remove();
+		
+		for(i = 0; i < answerSet.length; i++){
+			var answer = answerSet[i];
+			answerBox.append(answer);
+		}
+		$compile(answerBox)($scope);
+	};
+
 	//Construct new question.
 	$scope.nextQuestion = function(){
 		$scope.nextQuestionSwitch  = false;
@@ -87,12 +114,14 @@ app.controller('mainCtrl', function($window, $scope,$compile, NameNoteService, C
 
 		GameControlService.gameStart();
 		//Random game mode for now.
-		var temp = ["Note", "Chord"];
-		_category = temp[Math.floor(Math.random() * 2)];
-		if(_category == "Note")
-			NameNoteRun();
-		else
-			ChordRun();
+		var temp = ["Note", "Chord","Scale"];
+		_category = temp[Math.floor(Math.random() * 3)];
+		// if(_category == "Note")
+		// 	NameNoteRun();
+		// else if(_category == "Chord")
+		// 	ChordRun();
+		// else
+			ScaleRun();
 
 		//Add question text.
 		questionBox.append(GameControlService.getQuestionText(_category));

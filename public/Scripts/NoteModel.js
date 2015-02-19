@@ -11,7 +11,7 @@ app.service('NoteModel', function(){
 				Key: ["C", "G", "F", "Bb", "Eb", "Ab", "Db"],
 				CoorY: { G: [57,40,23.3] , F : [61.5,45,28] }};
 	var Cb= {	Name: "Cb",
-				Accidential : "none",
+				Accidential : "f",
 				Key: [],
 				CoorY: { G: [57,40,23.3] , F : [61.5,45,28] }};
 	var Cx = {	Name: "Cx",
@@ -79,7 +79,7 @@ app.service('NoteModel', function(){
 				Key: ["Eb", "Ab", "Db", "Gb"],
 				CoorY: { G: [61.5,45,28] , F : [50,32.5] }};
 	var A = {	Name: "A",
-				Accidential : "s",
+				Accidential : "none",
 				Key: ["C", "G", "D", "A", "E", "F", "Bb"],
 				CoorY: { G: [61.5,45,28] , F : [50,32.5] }};
 	var As = {	Name: "As",
@@ -173,10 +173,36 @@ app.service('NoteModel', function(){
 						{ Name: "Bmin",
 						Notes : ["B","D","Fs"] }];
 
+	//Scale Model.
+	var _scaleList =[	{ Name: "CM" ,
+						Notes: ["C","D","E","F","G","A","B"] },
+						{ Name: "GM",
+						Notes: ["G","A","B","C","D","E","Fs"] },
+						{ Name: "DM",
+						Notes: ["D","E","Fs","G","A","B","Cs"] },
+						{ Name: "AM",
+						Notes: ["A","B","Cs","D","E","Fs","Gs"]},
+						{ Name: "EM",
+						Notes: ["E","Fs","Gs","A","B","Cs","Ds"]},
+						{ Name: "BM",
+						Notes: ["B","C","Ds","E","Fs","Gs","As"]},
+						{ Name: "FsM",
+						Notes: ["Fs","Gs","As","B","Cs","Ds","Es"]},
+						{ Name: "DbM",
+						Notes: ["Db","Eb","F","Gb","Ab","Bb","C"]},
+						{ Name: "AbM",
+						Notes: ["Ab","Bb","C","Db","Eb","F","G"]},
+						{ Name: "EbM",
+						Notes: ["Eb","F","G","Ab","Bb","C","D"]},
+						{ Name: "BbM",
+						Notes: ["Bb","C","D","Eb","F","G","A"]},
+						{ Name: "FM",
+						Notes: ["F","G","A","Bb","C","D","E"]}];
+
 	//Return Note with input name.
 	this.getNoteWithName = function(noteName){
 		var result = "";
-		for(i = 0; i < _noteList.length; i++){
+		for(var i = 0; i < _noteList.length; i++){
 			var note = _noteList[i];
 			if(note.Name == noteName){
 				result = note;
@@ -189,7 +215,7 @@ app.service('NoteModel', function(){
 	//return Chord with input chord name.
 	this.getChordWithName = function(chordName){
 		var result = "";
-		for(i = 0; i < _chordList.length; i++){
+		for(var i = 0; i < _chordList.length; i++){
 			var chord = _chordList[i];
 			if(chord.Name == chordName){
 				result = chord;
@@ -198,4 +224,24 @@ app.service('NoteModel', function(){
 		}
 		return result;
 	};
+
+	//return Scale with input scale name.
+	this.getScaleWithName = function(scaleName){
+		var result = ""
+		for(var i = 0; i < _scaleList.length; i++){
+			var scale = _scaleList[i];
+			if(scale.Name == scaleName){
+				result = scale;
+				break;
+			}
+		}
+		return result;
+	};
 });
+
+
+
+
+
+
+

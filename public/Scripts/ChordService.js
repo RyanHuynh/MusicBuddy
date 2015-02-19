@@ -66,7 +66,7 @@ app.service('ChordService', function(NoteModel, GameControlService){
 		//Construct notes.
 		var noteArray = _getChordInversion(root, _3rdNote, _5thNote);
 		var lowestYCoord = _firstNoteLowestInterval;
-		for(i = 0; i < noteArray.length; i++){
+		for(var i = 0; i < noteArray.length; i++){
 			var currentNote = noteArray[i];
 			var noteName = currentNote.Name;
 			var xCoord = _firstNoteXCoord + _xDistanceBetweenNote * i;
@@ -103,7 +103,7 @@ app.service('ChordService', function(NoteModel, GameControlService){
 		var resultSet = [];
 
 		//Get 3 wrong answers first
-		for(i = 1; i <= 3; i++){
+		for(var i = 1; i <= 3; i++){
 			var currentChordIndex = (_correctAnswerIndex + 2 * i) % _chordNameList.length;
 			var currentChordName = _chordNameList[currentChordIndex];
 			var currentChord = "<answer class='squareBox' value=" + currentChordName + " type='Chord'></answer>";
