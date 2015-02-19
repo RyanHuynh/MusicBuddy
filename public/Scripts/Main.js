@@ -116,11 +116,11 @@ app.controller('mainCtrl', function($window, $scope,$compile, NameNoteService, C
 		//Random game mode for now.
 		var temp = ["Note", "Chord","Scale"];
 		_category = temp[Math.floor(Math.random() * 3)];
-		// if(_category == "Note")
-		// 	NameNoteRun();
-		// else if(_category == "Chord")
-		// 	ChordRun();
-		// else
+		if(_category == "Note")
+			NameNoteRun();
+		else if(_category == "Chord")
+			ChordRun();
+		else
 			ScaleRun();
 
 		//Add question text.
