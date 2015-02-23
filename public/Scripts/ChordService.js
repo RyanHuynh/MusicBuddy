@@ -1,5 +1,5 @@
 /* Chord Service: Handles "Chord" game mode functionality */
-app.service('ChordService', function(NoteModel, GameControlService){
+app.service('ChordService', function(NoteModel, GameControlService, SettingService){
 
 	/****************************************
 	 *				 VARIABLES		    	*
@@ -64,8 +64,15 @@ app.service('ChordService', function(NoteModel, GameControlService){
 		var clefUsed = GameControlService.getClefUsed();
 		
 		//Construct notes.
-		var noteArray = _getChordInversion(root, _3rdNote, _5thNote);
-		var lowestYCoord = _firstNoteLowestInterval;
+		if(SettingService.isChordInverted()){
+			var noteArray = _getChordInversion(root, _3rdNote, _5thNote);
+			var lowestInterval = _firstNoteLowestInterval;
+		}
+		else{
+			var noteArray = [root,_3rdNote,_5thNote];
+			var lowestInterval = 50;
+		}
+		var lowestYCoord = lowestInterval;
 		for(var i = 0; i < noteArray.length; i++){
 			var currentNote = noteArray[i];
 			var noteName = currentNote.Name;
