@@ -155,7 +155,25 @@ app.controller('mainCtrl', function($window, $scope,$compile, ngDialog, NameNote
 		$scope.nextQuestion();
 	});
 
+	//Open feedback tab.
+	$scope.openFeedback = function(){
+		ngDialog.open({
+			template : 'feedback.html',
+			className: 'ngdialog-theme-default feedback',
+			controller: 'feedbackCtrl'});
+	}
+	//First run.
 	$scope.nextQuestion();
+});
+app.controller('feedbackCtrl', function($http,$scope){
+	$scope.submitFeedback = function(){
+		console.log($scope.Feedback);
+		$http.post('/api/feedback/MusicBuddy', $scope.Feedback)
+			.success(function(res){
+				
+			});
+		$scope.closeThisDialog();
+	};
 });
 app.controller('settingCtrl', function($rootScope, $scope, SettingService){
 	//Load setting back.
