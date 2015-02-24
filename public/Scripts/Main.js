@@ -168,10 +168,14 @@ app.controller('settingCtrl', function($rootScope, $scope, SettingService){
 	$scope.inversionChord = SettingService.isChordInverted();
 	$scope.chordWithKey = SettingService.isKeyUsedinChord();
 
+	//Scale Setting
+	$scope.randomNotePos = SettingService.isRandomNotePos();
+
 	//Apply setting
 	$scope.applySetting = function(){
 		SettingService.saveQuestionType($scope.noteType, $scope.chordType, $scope.scaleType);
 		SettingService.saveChordSetting($scope.inversionChord,$scope.chordWithKey);
+		SettingService.saveScaleSetting($scope.randomNotePos);
 		$rootScope.$broadcast('settingApplied');
 	};
 
@@ -182,6 +186,7 @@ app.controller('settingCtrl', function($rootScope, $scope, SettingService){
 		$scope.scaleType = true;
 		$scope.inversionChord = false;
 		$scope.chordWithKey = false;
+		$scope.randomNotePos = false;
 	};
 });
 /****************************************

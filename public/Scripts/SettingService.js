@@ -10,6 +10,9 @@ app.service('SettingService', function(){
 	var _inversionChord = false;
 	var _keyUsedInChord = false;
 
+	//Scale setting with default value.
+	var _randomNotePos = false;
+
 	this.saveQuestionType = function(noteType, chordType, scaleType){
 		_noteType = noteType;
 		_chordType = chordType;
@@ -31,6 +34,10 @@ app.service('SettingService', function(){
 		_inversionChord = inversion;
 		_keyUsedInChord = keyUsed;
 	}
+	this.saveScaleSetting = function(randomPos){
+		_randomNotePos = randomPos;
+	}
+
 	this.isNoteType = function(){
 		return _noteType;
 	}
@@ -44,11 +51,16 @@ app.service('SettingService', function(){
 		return _questionType;
 	}
 
-	//Chord setting.
+	//Chord Setting.
 	this.isChordInverted = function(){
 		return _inversionChord;
 	}
 	this.isKeyUsedinChord = function(){
 		return _keyUsedInChord;
+	}
+
+	//Scale Setting.
+	this.isRandomNotePos = function(){
+		return _randomNotePos;
 	}
 });

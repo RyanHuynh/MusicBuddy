@@ -199,7 +199,32 @@ app.service('NoteModel', function(){
 						{ Name: "BbM",
 						Notes: ["Bb","C","D","Eb","F","G","A"]},
 						{ Name: "FM",
-						Notes: ["F","G","A","Bb","C","D","E"]}];
+						Notes: ["F","G","A","Bb","C","D","E"]},
+
+						{ Name: "Cmin",
+						Notes: ["C","D","Eb","F","G","Ab","Bb"]},
+						{ Name: "Dmin",
+						Notes: ["D","E","F","G","A","Bb","C"]},
+						{ Name: "Emin",
+						Notes: ["E","Fs","G","A","B","C","D"]},
+						{ Name: "Fmin",
+						Notes: ["F","G","Ab","Bb","C","Db","Eb"]},
+						{ Name: "Gmin",
+						Notes: ["G","A","Bb","C","D","Eb","F"]},
+						{ Name: "Amin",
+						Notes: ["A","B","C","D","E","F","G"]},
+						{ Name: "Bmin",
+						Notes: ["B","Cs","D","E","F","G","A"]},
+						{ Name: "Csmin",
+						Notes: ["Cs","Ds","E","Fs","Gs","A","B"]},
+						{ Name: "Dsmin",
+						Notes: ["Ds","F","Fs","Gs","As","B","Cs"]},
+						{ Name: "Fsmin",
+						Notes: ["Fs","Gs","A","B","Cs","D","E"]},
+						{ Name: "Gsmin",
+						Notes: ["Gs","As","B","Cs","Ds","E","Fs"]},
+						{ Name: "Asmin",
+						Notes: ["As","C","Cs","Ds","F","Fs","Gs"]}];
 
 	//Key signature model
 	var _keyList = [{	Name: "C",
