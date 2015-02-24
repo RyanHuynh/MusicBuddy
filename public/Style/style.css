@@ -205,8 +205,8 @@ respond{
 #setting{
 	background: url('../img/Misc/setting.png');
 	background-size: 100% 100%;
-	width: 24%;
-	height:7%;
+	width: 27%;
+	height:8%;
 	top:77%;
 	left:68%;
 	cursor: pointer;
@@ -218,8 +218,8 @@ respond{
 	background-size: 100% 100%;
 	width: 24%;
 	height:7%;
-	top:53%;
-	left:58%;
+	top:56%;
+	left:62%;
 	cursor: pointer;
 	-webkit-tap-highlight-color: rgba(0,0,0,0); 
 }
@@ -362,7 +362,7 @@ input[type="checkbox"] + label span {
     margin-right:10px;
 }
 input[type="checkbox"]:checked + label span {
-	background:url('/img/Misc/chkbox.png');
+	background:url('../img/Misc/chkbox.png');
 	background-size: 100% 100%;
 }
 /******************/

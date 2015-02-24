@@ -32,7 +32,7 @@ app.service('ScaleService', function(NoteModel, GameControlService){
 		
 		//Construct notes.
 		var noteArray = randomScale.Notes;
-		console.log(noteArray);
+		//console.log(noteArray);
 		var lowestYCoord = _firstNoteLowestInterval;
 		for(var i = 0; i < noteArray.length; i++){
 			var currentNote = NoteModel.getNoteWithName(noteArray[i]);
