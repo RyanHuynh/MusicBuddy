@@ -71,8 +71,8 @@ app.service('ScaleService', function(NoteModel, GameControlService, SettingServi
 			}
 
 
-			var accidential = currentNote.Accidential;
-			var note = "<note value=" + noteName + " x=" + xCoord + " y=" + yCoord + " acc=" + accidential + "></note>";
+			var accidental = currentNote.Accidental;
+			var note = "<note value=" + noteName + " x=" + xCoord + " y=" + yCoord + " acc=" + accidental + "></note>";
 			result.push(note);
 			notePosOnBar++;
 		}

@@ -7,99 +7,99 @@ app.service('NoteModel', function(){
 
 	//Note models.
 	var C = {	Name: "C",
-				Accidential : "none",
+				Accidental : "none",
 				Key: ["C", "G", "F", "Bb", "Eb", "Ab", "Db"],
 				CoorY: { G: [57,39.5,23.3] , F : [61.5,44.5,28] }};
 	var Cb= {	Name: "Cb",
-				Accidential : "f",
+				Accidental : "f",
 				Key: [],
 				CoorY: { G: [57,39.5,23.3] , F : [61.5,44.5,28] }};
 	var Cx = {	Name: "Cx",
-				Accidential : "x",
+				Accidental : "x",
 				Key: [],
 				CoorY: { G: [57,39.5,23.3] , F : [61.5,44.5,28] }};
 	var Cs = {	Name: "Cs",
-				Accidential : "s",
+				Accidental : "s",
 				Key: ["D", "A", "E", "B", "Fs"],
 				CoorY: { G: [57,39.5,23.3] , F : [61.5,44.5,28] }};
 	var Db = {	Name: "Db",
-				Accidential : "f",
+				Accidental : "f",
 				Key: ["Ab", "Db", "Gb"],
 				CoorY: { G: [55,37,21] , F : [59,42,26] }};
 	var D = {	Name: "D",
-				Accidential : "none",
+				Accidental : "none",
 				Key: ["C", "G", "D", "A", "F", "Bb", "Eb"],
 				CoorY: { G: [55,37,21] , F : [59,42,26] }};
 	var Ds = {	Name: "Ds",
-				Accidential : "s",
+				Accidental : "s",
 				Key: ["E", "B", "Fs"],
 				CoorY: { G: [55,37,21] , F : [59,42,26] }};
 	var Eb = { 	Name: "Eb",
-				Accidential : "f",
+				Accidental : "f",
 				Key: ["Bb", "Eb", "Ab", "Db", "Gb"],
 				CoorY: { G: [52,35,21] , F : [57,39.5,23.3] }};
 	var E = { 	Name: "E",
-				Accidential : "none",
+				Accidental : "none",
 				Key: ["C", "G", "D", "A", "E", "B", "F"],
 				CoorY: { G: [52,35] , F : [57,39.5,23.3] }};
 	var Es = { 	Name: "Es",
-				Accidential : "s",
+				Accidental : "s",
 				Key: [],
 				CoorY: { G: [52,35] , F : [57,39.5,23.3] }};
 	var F = {	Name: "F",
-				Accidential : "none",
+				Accidental : "none",
 				Key: ["C", "F", "Bb", "Eb", "Ab", "Db"],
 				CoorY: { G: [49.5,32.5] , F : [55,37,21] }};		
 	var Fx = {	Name: "Fx",
-				Accidential : "x",
+				Accidental : "x",
 				Key:[],
 				CoorY: { G: [49.5,32.5] , F : [55,37,21] }};
 	var Fs = {	Name: "Fs",
-				Accidential : "s",
+				Accidental : "s",
 				Key: ["G","D","A","E","B","Fs"],
 				CoorY: { G: [49.5,32.5] , F : [55,37,21] }};		
 	var Fb = {	Name: "Fb",
-				Accidential : "f",
+				Accidental : "f",
 				Key: [],
 				CoorY: { G: [49.5,32.5] , F : [55,37,21] }};		
 	var Gb = { 	Name: "Gb",
-				Accidential : "f",
+				Accidental : "f",
 				Key: ["Db", "Gb"],
 				CoorY: { G: [63.5,47,30] , F : [52,35] }};
 	var G = { 	Name: "G",
-				Accidential : "none",
+				Accidental : "none",
 				Key: ["C", "G", "D", "F", "Bb", "Eb", "Ab"],
 				CoorY: { G: [63.5,47,30] , F : [52,35] }};
 	var Gs = { 	Name: "Gs",
-				Accidential : "s",
+				Accidental : "s",
 				Key: ["A", "E", "B", "Fs"],
 				CoorY: { G: [63.5,47,30] , F : [52,35] }};
 	var Ab = {	Name: "Ab",
-				Accidential : "f",
+				Accidental : "f",
 				Key: ["Eb", "Ab", "Db", "Gb"],
 				CoorY: { G: [61.5,44.5,28] , F : [49.5,32.5] }};
 	var A = {	Name: "A",
-				Accidential : "none",
+				Accidental : "none",
 				Key: ["C", "G", "D", "A", "E", "F", "Bb"],
 				CoorY: { G: [61.5,44.5,28] , F : [49.5,32.5] }};
 	var As = {	Name: "As",
-				Accidential : "s",
+				Accidental : "s",
 				Key: ["B", "Fs"],
 				CoorY: { G: [61.5,44.5,28] , F : [49.5,32.5] }};
 	var B = { 	Name: "B",
-				Accidential : "none",
+				Accidental : "none",
 				Key: ["C", "G", "D", "A", "E", "B"],
 				CoorY: { G: [59,42,26] , F : [63.5,47,30] }};
 	var Bb = { 	Name: "Bb",
-				Accidential : "f",
+				Accidental : "f",
 				Key: ["F", "Bb", "Eb", "Ab", "Db", "Gb"],
 				CoorY: { G: [59,42,26] , F : [63.5,47,30] }};
 	var Bs = { 	Name: "Bs",
-				Accidential : "s",
+				Accidental : "s",
 				Key: [],
 				CoorY: { G: [59,42,26] , F : [63.5,47,30] }};
 	var Bbb = { Name: "Bbb",
-				Accidential : "bb",
+				Accidental : "bb",
 				Key: [],
 				CoorY: { G: [59,42,26] , F : [63.5,47,30] }};
 	var _noteList = [C, Cb, Cs, Cx, Db, D, Ds, Eb, E, Es, F, Fs, Fx, Fb, Gb, G, Gs, Ab, A, As, B, Bb, Bs, Bbb];

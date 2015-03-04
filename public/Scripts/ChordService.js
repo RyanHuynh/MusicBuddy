@@ -12,7 +12,7 @@ app.service('ChordService', function(NoteModel, GameControlService, SettingServi
 	//Default value/setting.
 	var _xDistanceBetweenNote = 17;
 	var _firstNoteXCoord = 40;
-	var _firstNoteLowestInterval = 59;
+	var _firstNoteLowestInterval = 52;
 	var _correctAnswerIndex = "";
 	
 	/****************************************
@@ -21,23 +21,23 @@ app.service('ChordService', function(NoteModel, GameControlService, SettingServi
 
 	//Return random chord inversion.
 	var _getChordInversion = function (root, _3rdnote, _5thnote){
-		var randomChordInversion = Math.floor(Math.random() * 6);
+		var randomChordInversion = Math.floor(Math.random() * 3);
 		//Root position.
 		if(randomChordInversion == 0)
 			return [root, _3rdnote, _5thnote];
-		if(randomChordInversion == 1)
-			return [root, _5thnote, _3rdnote];
+		// if(randomChordInversion == 1)
+		// 	return [root, _5thnote, _3rdnote];
 		
 		//First Inversion
-		if(randomChordInversion == 2)
-			return [_3rdnote, root, _5thnote];
-		if(randomChordInversion == 3)
+		// if(randomChordInversion == 2)
+		// 	return [_3rdnote, root, _5thnote];
+		if(randomChordInversion == 1)
 			return [_3rdnote, _5thnote, root];
 		
 		//Second Inversion.
-		if(randomChordInversion == 4)
-			return [_5thnote, _3rdnote, root];
-		if(randomChordInversion == 5)
+		// if(randomChordInversion == 4)
+		// 	return [_5thnote, _3rdnote, root];
+		if(randomChordInversion == 2)
 			return [_5thnote, root ,_3rdnote];
 	}
 
@@ -71,20 +71,31 @@ app.service('ChordService', function(NoteModel, GameControlService, SettingServi
 		//Get choosen clef.
 		var clefUsed = GameControlService.getClefUsed();
 		
+		//Decide note, accidental position base on setting
+		if(SettingService.isBlockChord()){
+			var xDistanceBetweenNote = 0;
+			var accPos = 1;
+			var firstNoteXCoord = 47;
+		}
+		else{
+			var xDistanceBetweenNote = _xDistanceBetweenNote;
+			var accPos = 0;
+			var firstNoteXCoord = _firstNoteXCoord;
+		}
+
+
 		//Construct notes.
 		if(SettingService.isChordInverted()){
 			var noteArray = _getChordInversion(root, _3rdNote, _5thNote);
-			var lowestInterval = _firstNoteLowestInterval;
 		}
 		else{
 			var noteArray = [root,_3rdNote,_5thNote];
-			var lowestInterval = 50;
 		}
-		var lowestYCoord = lowestInterval;
+		var lowestYCoord = _firstNoteLowestInterval;
 		for(var i = 0; i < noteArray.length; i++){
 			var currentNote = noteArray[i];
 			var noteName = currentNote.Name;
-			var xCoord = _firstNoteXCoord + _xDistanceBetweenNote * i;
+			var xCoord = firstNoteXCoord + xDistanceBetweenNote * i;
 			var yCoord = "";
 			var interval = 0;
 			if(clefUsed == "G"){
@@ -102,15 +113,19 @@ app.service('ChordService', function(NoteModel, GameControlService, SettingServi
 				lowestYCoord = yCoord;
 			}
 			lowestYCoord = yCoord;
+		
 			if(SettingService.isKeyUsedinChord()){
 				if(noteName == "Fx" || noteName == "Bbb" || noteName == "Cx")
-					var accidential = currentNote.Accidential;
+					var accidental = currentNote.Accidental;
 				else
-					var accidential = 'none';
+					var accidental = 'none';
 			}
 			else
-				var accidential = currentNote.Accidential;
-			var note = "<note value=" + noteName + " x=" + xCoord + " y=" + yCoord + " acc=" + accidential + "></note>";
+				var accidental = currentNote.Accidental;
+			if(SettingService.isBlockChord() && accidental != "none")
+				accPos = (accPos + 1) % 2;
+
+			var note = "<note value=" + noteName + " x=" + xCoord + " y=" + yCoord + " acc=" + accidental + " acc-pos=" + accPos + "></note>";
 			result.push(note);
 		}
 

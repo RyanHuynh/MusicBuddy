@@ -177,6 +177,7 @@ app.controller('settingCtrl', function($rootScope, $scope, SettingService){
 	//Chord Setting
 	$scope.inversionChord = SettingService.isChordInverted();
 	$scope.chordWithKey = SettingService.isKeyUsedinChord();
+	$scope.blockChord = SettingService.isBlockChord();
 
 	//Scale Setting
 	$scope.randomNotePos = SettingService.isRandomNotePos();
@@ -184,7 +185,7 @@ app.controller('settingCtrl', function($rootScope, $scope, SettingService){
 	//Apply setting
 	$scope.applySetting = function(){
 		SettingService.saveQuestionType($scope.noteType, $scope.chordType, $scope.scaleType);
-		SettingService.saveChordSetting($scope.inversionChord,$scope.chordWithKey);
+		SettingService.saveChordSetting($scope.inversionChord,$scope.chordWithKey,$scope.blockChord);
 		SettingService.saveScaleSetting($scope.randomNotePos);
 		$rootScope.$broadcast('settingApplied');
 	};
@@ -194,8 +195,11 @@ app.controller('settingCtrl', function($rootScope, $scope, SettingService){
 		$scope.noteType = true;
 		$scope.chordType = true;
 		$scope.scaleType = true;
+
 		$scope.inversionChord = false;
 		$scope.chordWithKey = false;
+		$scope.blockChord = false;
+
 		$scope.randomNotePos = false;
 	};
 });
@@ -207,9 +211,10 @@ app.directive('note', function(GameControlService){
 		scope: {
 			x : '@',
 			y : '@',
-			acc : '@'
+			acc : '@', 
+			accPos : '@'
 		},
-		template: "<accidential type='{{ acc }}'></accidential>",
+		template: "<accidental type='{{ acc }}' position='{{ accPos }}'></accidental>",
 		link : function(scope, element){
 			//Pick a random node
 			var noteDuration = GameControlService.getNoteDuration();
@@ -222,13 +227,15 @@ app.directive('note', function(GameControlService){
 		}
 	}
 });	
-app.directive('accidential', function(){
+app.directive('accidental', function(){
 	return {
 		scope : {
-			type : '@'
+			type : '@',
+			position: '@'
 		},
 		link : function(scope, element){
-			element.css('background-image', 'url(Resources/Img/Accidential/' + scope.type + '.png)');
+			element.css('background-image', 'url(Resources/Img/Accidental/' + scope.type + '.png)');
+			element.css('left', scope.position * (-10) + "px");
 		}
 	}
 })

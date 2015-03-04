@@ -64,7 +64,7 @@ app.service('GameControlService', function(SettingService){
 
 	//Get a random note duration.
 	var _getRandomNoteDuration = function(){
-		var randomImage = Math.floor(Math.random() * 5 + 1);
+		var randomImage = Math.floor(Math.random() * 4 + 2);
 		return  'url(Resources/Img/Note/' + randomImage + '.png)';
 	}
 
