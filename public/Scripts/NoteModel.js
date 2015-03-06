@@ -248,7 +248,7 @@ app.service('NoteModel', function(){
 					{	Name: "Fs",
 						Notes: ["Cs","Ds","Es","Fs","Gs","As","B"],
 						Chord:["FsM","BM","CsM","Gsmin","Asmin","Dsmin"] },
-					{	Name: "Cs", //NEED PICTURE
+					{	Name: "Cs", 
 						Notes: ["Cs","Ds","Es","Fs","Gs","As","Bs"],
 						Chord:["CsM","FsM","GsM","Dsmin","Asmin"] },
 					{	Name: "F",
@@ -269,6 +269,35 @@ app.service('NoteModel', function(){
 					{	Name: "Gb",
 						Notes: ["Cb","Db","Eb","F","Gb","Ab","Bb"],
 						Chord:["GbM","DbM","Abmin","Bbmin","Ebmin"] }];
+
+	//Note Octave
+	var _octaveList = [{	Clef : "F",
+							Octave: [{	Name: "1",
+										Low: 100,
+										High: 62},
+									{	Name: "2",
+										Low: 61.5,
+										High: 45},
+									{	Name: "3",
+										Low: 44.5,
+										High: 28.5},
+									{	Name: "4",
+										Low: 28,
+										High: 0}]
+						},
+						{	Clef : "G",
+							Octave: [{	Name: "3",
+										Low: 100,
+										High: 57.5},
+									{	Name: "4",
+										Low: 57,
+										High: 40},
+									{	Name: "5",
+										Low: 39.5,
+										High: 24},
+									{	Name: "6",
+										Low: 23.3,
+										High: 0}]}];
 
 	//Return Note with input name.
 	this.getNoteWithName = function(noteName){
@@ -327,6 +356,24 @@ app.service('NoteModel', function(){
 		for(var i = 0; i < _keyList.length; i++){
 			if(_keyList[i].Name == keyName){
 				result = _keyList[i].Notes;
+				break;
+			}
+		}
+		return result;
+	}
+
+	//Get the octave name for current clef and position.
+	this.getOctaveName = function(clef, position){
+		var result = '';
+		var octaveContainer = [];
+		for(var i = 0; i < _octaveList.length; i++){
+			if(_octaveList[i].Clef == clef)
+				octaveContainer = _octaveList[i].Octave;
+		}
+		for(var i = 0; i < octaveContainer.length; i++){
+			var octave = octaveContainer[i];
+			if(position <= octave.Low && position > octave.High){
+				result = octave.Name;
 				break;
 			}
 		}

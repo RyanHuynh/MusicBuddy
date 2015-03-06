@@ -8,7 +8,7 @@ app.service('NameNoteService', function(NoteModel, GameControlService){
 	var _noteNameList = ["Cb", "C", "Cs", "Db", "D", "Ds", "Eb", "E", "Es", "Fb", "F", "Fs", "Gb", "G", "Gs", "Ab", "A", "As", "B", "Bb","Bs"];
 	var _correctAnswerIndex = "";
 	var _defaultXCoord = 50;
-	
+	var _soundSrc;
 	/****************************************
 	 *			COMMON FUNCTIONS		   	*
 	 ****************************************/
@@ -51,6 +51,10 @@ app.service('NameNoteService', function(NoteModel, GameControlService){
 		_correctAnswerIndex = correctAnswerIndex;
 		GameControlService.setCorrectAnswer(randomNoteName);
 
+		//
+		var noteWithOctave = randomNoteName + NoteModel.getOctaveName(clefUsed, yCoord);
+		_contructAudioSrc(noteWithOctave);
+
 		return note;
 	}
 
@@ -73,6 +77,18 @@ app.service('NameNoteService', function(NoteModel, GameControlService){
 		resultSet.splice(randomInsertIndex, 0, cAnswer);
 
 		return resultSet;
+	}
 
+	//Construct audio source for note.
+	var _contructAudioSrc = function(note){
+		_soundSrc = "<audio class='audioElement' autoplay>" +
+						"<source src='Resources/Sound/" + note +  ".wav' type=audio/wav >" +
+					"</audio>";
+	}
+
+	//Return sound src.
+	this.getSoundSource = function(){
+		//console.log(_soundSrc);
+		return _soundSrc;
 	}
 });

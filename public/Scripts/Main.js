@@ -6,6 +6,10 @@ var app = angular.module('myApp', ['ngDialog']);
 app.controller('mainCtrl', function($window, $scope,$compile, ngDialog, NameNoteService, ChordService, ScaleService, GameControlService, SettingService){
 	$scope.nextQuestionSwitch = false;
 
+	var musicCtrl = document.getElementsByClassName('audioElement');
+	$scope.playSound = function(){
+		musicCtrl[0].play();
+	}
 	//Check Answer respond and render respond to UI.
 	$scope.checkRespond = function(){
 		var respond = GameControlService.getQuestionRespond();
@@ -20,6 +24,16 @@ app.controller('mainCtrl', function($window, $scope,$compile, ngDialog, NameNote
 
 		//Disable all answer buttons.
 		angular.element(document.querySelector("div[id='answerBox']")).children().off('click');
+
+		//Show notes, extra line (if game mode is easr training)
+		if(SettingService.isEarTraining()){
+			var extraLine = document.getElementsByClassName('extraline');
+			for(var i = 0; i < extraLine.length; i++)
+				extraLine[i].style.visibility = 'visible';
+			var noteDisplay = document.getElementsByTagName('note');
+			for(var i = 0; i < noteDisplay.length; i++)
+				noteDisplay[i].style.visibility = 'visible';
+		}
 	}
 
 	//Routine run for "Note" game mode.
@@ -33,6 +47,23 @@ app.controller('mainCtrl', function($window, $scope,$compile, ngDialog, NameNote
 		//Get question .
 		var note = NameNoteService.getQuestion();
 		questionBox.append($compile(note)($scope));
+
+		//Get sound source for note (Ear Training mode).
+		if(SettingService.isEarTraining()){
+			var musicBox = angular.element(document.querySelector('div[id=musicBox]'));
+			musicBox.children().remove();
+			musicBox.append(NameNoteService.getSoundSource());
+			var repeatBtn = document.getElementById('repeatBtn');
+			repeatBtn.style.visibility = 'visible';
+
+			//Hide notes, extra line.
+			var extraLine = document.getElementsByClassName('extraline');
+			for(var i = 0; i < extraLine.length; i++)
+				extraLine[i].style.visibility = 'hidden';
+			var noteDisplay = document.getElementsByTagName('note');
+			for(var i = 0; i < noteDisplay.length; i++)
+				noteDisplay[i].style.visibility = 'hidden';
+		}
 		
 		//Get answers for the question.
 		var answerSet = NameNoteService.getAnswerSet();
@@ -102,6 +133,10 @@ app.controller('mainCtrl', function($window, $scope,$compile, ngDialog, NameNote
 		//Clear out the question box.
 		var questionBox = angular.element(document.querySelector('div[id=questionBox]'));
 		questionBox.children().remove();
+
+		//Clear repeat btn
+		var repeatBtn = document.getElementById('repeatBtn');
+		repeatBtn.style.visibility = 'hidden';
 		
 		//Pick a question type base on choice in setting.
 		var questionType = SettingService.getQuestionType();
@@ -159,7 +194,6 @@ app.controller('mainCtrl', function($window, $scope,$compile, ngDialog, NameNote
 });
 app.controller('feedbackCtrl', function($http,$scope){
 	$scope.submitFeedback = function(){
-		console.log($scope.Feedback);
 		$http.post('/api/feedback/MusicBuddy', $scope.Feedback)
 			.success(function(res){
 				
@@ -168,11 +202,14 @@ app.controller('feedbackCtrl', function($http,$scope){
 	};
 });
 app.controller('settingCtrl', function($rootScope, $scope, SettingService){
-	//Load setting back.
+	//Load setting.
 	//Question type.
 	$scope.noteType = SettingService.isNoteType();
 	$scope.chordType = SettingService.isChordType();
 	$scope.scaleType = SettingService.isScaleType();
+
+	//Note Setting
+	$scope.earTraining = SettingService.isEarTraining();
 
 	//Chord Setting
 	$scope.inversionChord = SettingService.isChordInverted();
@@ -185,6 +222,7 @@ app.controller('settingCtrl', function($rootScope, $scope, SettingService){
 	//Apply setting
 	$scope.applySetting = function(){
 		SettingService.saveQuestionType($scope.noteType, $scope.chordType, $scope.scaleType);
+		SettingService.saveNoteSetting($scope.earTraining);
 		SettingService.saveChordSetting($scope.inversionChord,$scope.chordWithKey,$scope.blockChord);
 		SettingService.saveScaleSetting($scope.randomNotePos);
 		$rootScope.$broadcast('settingApplied');
@@ -195,6 +233,8 @@ app.controller('settingCtrl', function($rootScope, $scope, SettingService){
 		$scope.noteType = true;
 		$scope.chordType = true;
 		$scope.scaleType = true;
+
+		$scope.earTraining = false;
 
 		$scope.inversionChord = false;
 		$scope.chordWithKey = false;
@@ -249,7 +289,6 @@ app.directive('answer', function(GameControlService){
 				scope.checkRespond();
 				element.addClass('animated rotateOutDownLeft')
 			});	
-
 		}
 	}
 })
@@ -304,7 +343,7 @@ app.directive('questionBoxSize',function($compile){
 });
 
 app.directive('squareBox', function($window){
-    return{
+    return { 
         restrict: 'C',
         link: function(scope, element){
             var style = $window.getComputedStyle(element[0], null);
@@ -313,6 +352,5 @@ app.directive('squareBox', function($window){
         }
     }
 });
-
 
 

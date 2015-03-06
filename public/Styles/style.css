@@ -162,8 +162,6 @@ note {
 	position: absolute;
 	width: 9%;
 	height: 30%;
-	top:18.6%;
-	left:20%;
 	z-index:10;
 }
 accidental {
@@ -220,6 +218,17 @@ respond{
 	height:7%;
 	top:56%;
 	left:62%;
+	cursor: pointer;
+	-webkit-tap-highlight-color: rgba(0,0,0,0); 
+}
+#repeatBtn{
+	position: absolute;
+	background: url('../Resources/Img/Misc/repeat.png');
+	background-size: 100% 100%;
+	width: 29%;
+ 	height: 8%;
+ 	top: 66%;
+  	left: 38%;
 	cursor: pointer;
 	-webkit-tap-highlight-color: rgba(0,0,0,0); 
 }
@@ -307,7 +316,7 @@ respond{
 	}
 }
 #settingBox{
-	height: 380px;
+	height: 450px;
 	position: relative;
 	font-size: 0.9em;
 }
@@ -315,6 +324,7 @@ respond{
 	text-align: center;
 	margin-bottom: 5%;
 	font-size: 1.5em;
+	font-family: 'Lobster', cursive;
 }
 #settingBtn{
 	position: absolute;
@@ -417,6 +427,12 @@ label{
 		left:86%;
 		width: 9%;
 		height:11%;
+	}
+	#repeatBtn{
+		width: 11%;
+		height: 12%;
+		top: 71%;
+		left: 74%
 	}
 	small{
 		font-size: 0.8em;

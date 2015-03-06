@@ -1,10 +1,13 @@
 app.service('SettingService', function(){
 	//Question type.
 	var _questionType = ["Note","Chord","Scale"];
-	// var _questionType = ["Chord"];
+	// var _questionType = ["Note"];
 	var _noteType = true;
 	var _chordType = true;
 	var _scaleType = true;
+
+	//Note setting
+	var _earTraining = false;
 
 	//Chord setting default value.
 	var _inversionChord = false;
@@ -31,6 +34,9 @@ app.service('SettingService', function(){
 			_noteType = true;
 		}
 	}
+	this.saveNoteSetting = function(earTraining){
+		_earTraining = earTraining;
+	}
 	this.saveChordSetting = function(inversion, keyUsed, chordType){
 		_inversionChord = inversion;
 		_keyUsedInChord = keyUsed;
@@ -40,6 +46,7 @@ app.service('SettingService', function(){
 		_randomNotePos = randomPos;
 	}
 
+	//Question type.
 	this.isNoteType = function(){
 		return _noteType;
 	}
@@ -53,6 +60,11 @@ app.service('SettingService', function(){
 		return _questionType;
 	}
 
+	//Note Setting.
+	this.isEarTraining = function(){
+		return _earTraining;
+	}
+
 	//Chord Setting.
 	this.isChordInverted = function(){
 		return _inversionChord;
@@ -63,7 +75,6 @@ app.service('SettingService', function(){
 	this.isBlockChord = function(){
 		return _blockChord;
 	}
-
 
 	//Scale Setting.
 	this.isRandomNotePos = function(){

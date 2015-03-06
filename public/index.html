@@ -3,14 +3,17 @@
 <html>
 	<head>
 		<meta name="viewport" content="width=device-width" />
-		<meta name="keywords" content="Ryan Huynh, music web game, sight reading game, angularjs game, music app, sight reading app, music buddy">
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.9/angular.min.js"></script>
+		<meta name="keywords" content="Ryan Huynh, music web game, sight reading game, angularjs game, music app, sight reading app, music buddy, ear training, sheet music reading">
+		
 		<link rel="stylesheet" type="text/css" href="Styles/animate.css" >
 		<link rel="stylesheet" type="text/css" href="Styles/ngDialog-theme-default.css" >
 		<link rel="stylesheet" type="text/css" href="Styles/ngDialog.css" >
 		<link rel="stylesheet" type="text/css" href="Styles/style.css" >
 		<link rel="stylesheet" type="text/css" href="Styles/feedback.css" >
 		<link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.9/angular.min.js"></script>
 		<script src="Scripts/Main.js"></script>
 		<script src="Scripts/ngDialog.js"></script>
 		<script src="Scripts/NoteModel.js"></script>
@@ -18,7 +21,7 @@
 		<script src="Scripts/ChordService.js"></script>
 		<script src="Scripts/ScaleService.js"></script>
 		<script src="Scripts/NameNoteService.js"></script>	
-		<script src="Scripts/GameControlService.js"></script>	
+		<script src="Scripts/GameControlService.js"></script>
 
 		<title>Music Buddy</title>	
 	</head>
@@ -34,6 +37,10 @@
 			</div>
 		</div>
 		<div id='feedbackTab' ng-click='openFeedback()'><h3>Feedback</h3></div>
+		
+		<div id="musicBox"></div>
+		<div id='repeatBtn' type='button' value='Repeat' ng-click='playSound()'></div>
+
 		<footer><small>Designed and created by Ryan Huynh. Copyright &copy; 2015.</small></footer>
 	</body>
 	<script>
