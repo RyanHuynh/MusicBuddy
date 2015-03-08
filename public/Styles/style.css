@@ -440,6 +440,10 @@ label{
 	}
 }
 @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape){
+	html {
+	    background: url('../Resources/Img/Misc/ipadbkg.jpg') no-repeat;
+	    background-size:  100% 100%;
+	}
 	.mainWrapper{
 		margin-top:50px;
 	}
@@ -472,6 +476,10 @@ label{
 	}
 }
 @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait){
+	html {
+	    background: url('../Resources/Img/Misc/ipadbkg-potrait.jpg') no-repeat;
+	    background-size:  100% 100%;
+	}
 	.mainWrapper{
 		padding:15px 55px;
 	}
@@ -482,7 +490,8 @@ label{
 		width: 75%;
 	}
 	answer{
-		width: 22%;
+		width: 18%;
+		margin-right: 8.5%;
 	}
 	#setting{
 		height: 8%;
@@ -493,6 +502,12 @@ label{
 		height: 7%;
 		top:62%;
 		left: 65%;
+	}
+	#repeatBtn{
+		width: 17%;
+		height: 8%;
+		top: 67%;
+		left: 43%
 	}
 	respond{
 		width: 20%;

@@ -5,11 +5,9 @@ var app = angular.module('myApp', ['ngDialog']);
  ****************************************/
 app.controller('mainCtrl', function($window, $scope,$compile, ngDialog, NameNoteService, ChordService, ScaleService, GameControlService, SettingService){
 	$scope.nextQuestionSwitch = false;
+	var _currentCategory = '';
+	var _loopTimeout; 
 
-	var musicCtrl = document.getElementsByClassName('audioElement');
-	$scope.playSound = function(){
-		musicCtrl[0].play();
-	}
 	//Check Answer respond and render respond to UI.
 	$scope.checkRespond = function(){
 		var respond = GameControlService.getQuestionRespond();
@@ -48,23 +46,6 @@ app.controller('mainCtrl', function($window, $scope,$compile, ngDialog, NameNote
 		var note = NameNoteService.getQuestion();
 		questionBox.append($compile(note)($scope));
 
-		//Get sound source for note (Ear Training mode).
-		if(SettingService.isEarTraining()){
-			var musicBox = angular.element(document.querySelector('div[id=musicBox]'));
-			musicBox.children().remove();
-			musicBox.append(NameNoteService.getSoundSource());
-			var repeatBtn = document.getElementById('repeatBtn');
-			repeatBtn.style.visibility = 'visible';
-
-			//Hide notes, extra line.
-			var extraLine = document.getElementsByClassName('extraline');
-			for(var i = 0; i < extraLine.length; i++)
-				extraLine[i].style.visibility = 'hidden';
-			var noteDisplay = document.getElementsByTagName('note');
-			for(var i = 0; i < noteDisplay.length; i++)
-				noteDisplay[i].style.visibility = 'hidden';
-		}
-		
 		//Get answers for the question.
 		var answerSet = NameNoteService.getAnswerSet();
 		var answerBox = angular.element(document.querySelector('div[id=answerBox]'));
@@ -133,33 +114,74 @@ app.controller('mainCtrl', function($window, $scope,$compile, ngDialog, NameNote
 		//Clear out the question box.
 		var questionBox = angular.element(document.querySelector('div[id=questionBox]'));
 		questionBox.children().remove();
-
-		//Clear repeat btn
-		var repeatBtn = document.getElementById('repeatBtn');
-		repeatBtn.style.visibility = 'hidden';
 		
 		//Pick a question type base on choice in setting.
 		var questionType = SettingService.getQuestionType();
-		var category = questionType[Math.floor(Math.random() * questionType.length)];
+		_currentCategory = questionType[Math.floor(Math.random() * questionType.length)];
 
 		//Reset game state and start new one.
-		GameControlService.gameStart(category);
+		GameControlService.gameStart(_currentCategory);
 
 		//Get clef used.
 		var clefUsed = GameControlService.getClefUsed();
 		questionBox.css('background-image', 'url(Resources/Img/Clef/' + clefUsed + '.jpg)' );
 
 		//Pick a question for question type.
-		if(category == "Note")
+		if(_currentCategory == "Note")
 			NameNoteRun();
-		else if(category == "Chord")
+		else if(_currentCategory == "Chord")
 			ChordRun();
 		else
 			ScaleRun();
 
+		//Get sound source for note (Ear Training mode).
+		if(SettingService.isEarTraining()){
+			var musicBox = angular.element(document.querySelector('div[id=musicBox]'));
+			musicBox.children().remove();
+			musicBox.append(GameControlService.getSoundSource());
+			var repeatBtn = document.getElementById('repeatBtn');
+			repeatBtn.style.visibility = 'visible';
+
+			//Hide notes, extra line.
+			var extraLine = document.getElementsByClassName('extraline');
+			for(var i = 0; i < extraLine.length; i++)
+				extraLine[i].style.visibility = 'hidden';
+			var noteDisplay = document.getElementsByTagName('note');
+			for(var i = 0; i < noteDisplay.length; i++)
+				noteDisplay[i].style.visibility = 'hidden';
+			setTimeout($scope.playSound, 500);
+		}
+		else{
+			//Clear repeat btn
+			var repeatBtn = document.getElementById('repeatBtn');
+			repeatBtn.style.visibility = 'hidden';
+		}
+
 		//Add question text.
-		questionBox.append(GameControlService.getQuestionText(category));
+		questionBox.append(GameControlService.getQuestionText(_currentCategory));
 	};
+
+	//Play music notes.
+	$scope.playSound = function(){
+		var currentNoteIndex = 0;
+		if(_loopTimeout){
+			clearTimeout(_loopTimeout);
+			currentNoteIndex = 0;
+		}
+		
+		var musicCtrl = document.getElementsByClassName('audioElement');
+		if(_currentCategory == 'Chord' && SettingService.isBlockChord())
+			var noteDelay = 0;
+		else
+			var noteDelay = 500;
+		var playLoop = function(){
+			musicCtrl[currentNoteIndex].play();
+			currentNoteIndex++;
+			if(currentNoteIndex != musicCtrl.length)
+			_loopTimeout = setTimeout(playLoop, noteDelay);
+		}
+		playLoop();
+	}
 
 	//Open setting menu.
 	$scope.openSetting = function(){
@@ -208,9 +230,6 @@ app.controller('settingCtrl', function($rootScope, $scope, SettingService){
 	$scope.chordType = SettingService.isChordType();
 	$scope.scaleType = SettingService.isScaleType();
 
-	//Note Setting
-	$scope.earTraining = SettingService.isEarTraining();
-
 	//Chord Setting
 	$scope.inversionChord = SettingService.isChordInverted();
 	$scope.chordWithKey = SettingService.isKeyUsedinChord();
@@ -219,10 +238,13 @@ app.controller('settingCtrl', function($rootScope, $scope, SettingService){
 	//Scale Setting
 	$scope.randomNotePos = SettingService.isRandomNotePos();
 
+	//Game mode.
+	$scope.earTraining = SettingService.isEarTraining();
+
 	//Apply setting
 	$scope.applySetting = function(){
 		SettingService.saveQuestionType($scope.noteType, $scope.chordType, $scope.scaleType);
-		SettingService.saveNoteSetting($scope.earTraining);
+		SettingService.saveGameMode($scope.earTraining);
 		SettingService.saveChordSetting($scope.inversionChord,$scope.chordWithKey,$scope.blockChord);
 		SettingService.saveScaleSetting($scope.randomNotePos);
 		$rootScope.$broadcast('settingApplied');

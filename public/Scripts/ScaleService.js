@@ -40,6 +40,7 @@ app.service('ScaleService', function(NoteModel, GameControlService, SettingServi
 		else
 			var lowestYCoord = _firstNoteLowestInterval;	
 		var notePosOnBar = 0;
+		var audioArray = [];
 		while(noteArray.length > 0){
 			//console.log(lowestYCoord);
 			if(SettingService.isRandomNotePos()){
@@ -75,7 +76,14 @@ app.service('ScaleService', function(NoteModel, GameControlService, SettingServi
 			var note = "<note value=" + noteName + " x=" + xCoord + " y=" + yCoord + " acc=" + accidental + "></note>";
 			result.push(note);
 			notePosOnBar++;
+
+			//Get sound src for notes
+			var noteWithOctave = noteName + NoteModel.getOctaveName(clefUsed, yCoord);
+			audioArray.push(noteWithOctave);
 		}
+
+		//Construct audio src for each notes.
+		GameControlService.constructAudioSrc(audioArray);
 
 		//Set correct answer here
 		_correctAnswerIndex = randomScaleIndex;

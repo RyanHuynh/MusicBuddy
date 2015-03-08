@@ -6,7 +6,7 @@ app.service('SettingService', function(){
 	var _chordType = true;
 	var _scaleType = true;
 
-	//Note setting
+	//Game mode
 	var _earTraining = false;
 
 	//Chord setting default value.
@@ -34,7 +34,7 @@ app.service('SettingService', function(){
 			_noteType = true;
 		}
 	}
-	this.saveNoteSetting = function(earTraining){
+	this.saveGameMode = function(earTraining){
 		_earTraining = earTraining;
 	}
 	this.saveChordSetting = function(inversion, keyUsed, chordType){
@@ -60,7 +60,7 @@ app.service('SettingService', function(){
 		return _questionType;
 	}
 
-	//Note Setting.
+	//Game Mode.
 	this.isEarTraining = function(){
 		return _earTraining;
 	}

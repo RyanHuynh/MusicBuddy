@@ -7,10 +7,6 @@
 		<li><input id='scaleType' type='checkbox' ng-model='scaleType'><label for='scaleType'><span></span>Scale</label></li>
 	</form>
 	<form>
-		<h2>Note question's setting:</h2>
-		<li><input id='earTraining' type='checkbox' ng-model='earTraining'><label for='earTraining'><span></span>Ear Training</label></li>
-	</form>
-	<form>
 		<h2>Chord question's setting:</h2>
 		<li><input id='blockChord' type='checkbox' ng-model='blockChord'><label for='blockChord'><span></span>Block Chord</label></li>
 		<li><input id='chordInversion' type='checkbox' ng-model='inversionChord'><label for='chordInversion'><span></span>Inversion</label></li>
@@ -19,6 +15,10 @@
 	<form>
 		<h2>Scale question's setting:</h2>
 		<li><input id='scaleOpt1' type='checkbox' ng-model='randomNotePos'><label for='scaleOpt1'><span></span>Random Note's Position</label></li>
+	</form>
+	<form>
+		<h2>Game Mode:</h2>
+		<li><input id='earTraining' type='checkbox' ng-model='earTraining'><label for='earTraining'><span></span>Ear Training Mode</label></li>
 	</form>
 	<div id="settingBtn" >
 		<input id="defaultBtn" type='button' value='Default' ng-click='defaultSetting()'>

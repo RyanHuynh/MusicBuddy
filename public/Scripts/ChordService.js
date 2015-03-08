@@ -83,7 +83,6 @@ app.service('ChordService', function(NoteModel, GameControlService, SettingServi
 			var firstNoteXCoord = _firstNoteXCoord;
 		}
 
-
 		//Construct notes.
 		if(SettingService.isChordInverted()){
 			var noteArray = _getChordInversion(root, _3rdNote, _5thNote);
@@ -92,6 +91,7 @@ app.service('ChordService', function(NoteModel, GameControlService, SettingServi
 			var noteArray = [root,_3rdNote,_5thNote];
 		}
 		var lowestYCoord = _firstNoteLowestInterval;
+		var audioArray = [];
 		for(var i = 0; i < noteArray.length; i++){
 			var currentNote = noteArray[i];
 			var noteName = currentNote.Name;
@@ -127,7 +127,14 @@ app.service('ChordService', function(NoteModel, GameControlService, SettingServi
 
 			var note = "<note value=" + noteName + " x=" + xCoord + " y=" + yCoord + " acc=" + accidental + " acc-pos=" + accPos + "></note>";
 			result.push(note);
+
+			//Get sound src for notes
+			var noteWithOctave = noteName + NoteModel.getOctaveName(clefUsed, yCoord);
+			audioArray.push(noteWithOctave);
 		}
+
+		//Construct audio src for each notes.
+		GameControlService.constructAudioSrc(audioArray);
 
 		//Set correct answer here
 		if(SettingService.isKeyUsedinChord()){
@@ -143,6 +150,7 @@ app.service('ChordService', function(NoteModel, GameControlService, SettingServi
 		else
 			_correctAnswerIndex = randomChordIndex;
 		GameControlService.setCorrectAnswer(randomChordName);
+
 		return result;
 	}
 
@@ -172,5 +180,4 @@ app.service('ChordService', function(NoteModel, GameControlService, SettingServi
 		var key = "<key value=" + _keyUsed + " clef=" + _clefUsed + " ></key>";
 		return key;
 	}
-
 });

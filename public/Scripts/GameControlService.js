@@ -17,6 +17,7 @@ app.service('GameControlService', function(SettingService){
 	var _keyName = ["C","G","D","A","E","B","Fs","Cs","F","Bb","Eb","Ab","Db","Gb"];
 	var _correctAnswer = "";
 	var _questionRespond = "";
+	var _soundSrc = '';
 
 	//Variables used in respond function
 	var _rightRespond = "R";
@@ -72,6 +73,7 @@ app.service('GameControlService', function(SettingService){
 	this.setCorrectAnswer = function(cAnswer){
 		_correctAnswer = cAnswer;
 	}
+
 	//Verify the answer click. Call _endQuestionHandler to construct UI respond for controller.
 	this.isCorrectAnswer = function(value){
 		if(value == _correctAnswer){
@@ -84,6 +86,16 @@ app.service('GameControlService', function(SettingService){
 			return false;
 		}	
 	};	
+
+	//Construct audio src for notes
+	this.constructAudioSrc = function(audioArray){
+		_soundSrc = '';
+		for(var i = 0; i < audioArray.length; i++){
+			_soundSrc = _soundSrc + "<audio class='audioElement'>" +
+										"<source src='Resources/Sound/" + audioArray[i] + ".mp3' type=audio/mp3 >" +
+									"</audio>";
+		}
+	}
 
 	/***************************************
 	 *		GET METHODS FOR FRONT END      *
@@ -107,6 +119,7 @@ app.service('GameControlService', function(SettingService){
 	this.getQuestionRespond = function(){
 		return _questionRespond;
 	};
+
 	//Return note duration used for this question.
 	this.getNoteDuration = function(){
 		return _noteDuration;
@@ -115,6 +128,11 @@ app.service('GameControlService', function(SettingService){
 		var result = "<p>" + category + "</p>"
 		return result;
 	};
+
+	//Get audio src
+	this.getSoundSource = function(){
+		return _soundSrc;
+	}
 
 	/****************************************
 	 *				UI CONTROL				*
